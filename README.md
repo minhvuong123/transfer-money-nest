@@ -71,3 +71,12 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+
+- Setup AuthController and endpoints routes
+- Setup AuthService
+- Setup UserService
+- Setup LocalStrategy
+- Setup Guards
+- Setup Session Serializer
+- Setup Session Store
