@@ -1,5 +1,11 @@
 import { Exclude } from 'class-transformer';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity({ name: 'users' })
 export class User {
@@ -7,7 +13,7 @@ export class User {
   id: string;
 
   @Column({ name: 'first_name' })
-  firtName: string;
+  firstName: string;
 
   @Column({ name: 'last_name' })
   lastName: string;
@@ -18,4 +24,17 @@ export class User {
   @Column()
   @Exclude()
   password: string;
+
+  @CreateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  created_at: Date;
+
+  @UpdateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
+  })
+  updated_at: Date;
 }
