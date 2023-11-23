@@ -14,11 +14,6 @@ import { User } from 'src/utils/typeorm';
       useClass: UserService,
     },
   ],
-  exports: [
-    {
-      provide: Services.USERS,
-      useClass: UserService,
-    },
-  ],
+  exports: [Services.USERS],
 })
 export class UserModule {}

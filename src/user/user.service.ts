@@ -5,6 +5,7 @@ import { User } from 'src/utils/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserParams, FindUserParams } from 'src/utils/types/queries';
 import { UserFoundException } from './exceptions/UserFoundException';
+import { hasPassword } from 'src/utils/helpers';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -22,6 +23,7 @@ export class UserService implements IUserService {
     if (existingUser) {
       throw new UserFoundException();
     }
+    params.password = await hasPassword(params.password);
 
     const newUser = this.userRepository.create(params);
 
