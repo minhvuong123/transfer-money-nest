@@ -3,9 +3,14 @@ import { IUserService } from './user';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/utils/typeorm';
 import { Repository } from 'typeorm';
-import { CreateUserParams, FindUserParams } from 'src/utils/types/queries';
+import {
+  CreateUserParams,
+  FindUserOptions,
+  FindUserParams,
+} from 'src/utils/types/queries';
 import { UserFoundException } from './exceptions/UserFoundException';
 import { hasPassword } from 'src/utils/helpers';
+import { getUserSelectors } from 'src/utils/constants';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -13,8 +18,9 @@ export class UserService implements IUserService {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
 
-  findUser(params: FindUserParams): Promise<User> {
-    return this.userRepository.findOneBy(params);
+  findUser(params: FindUserParams, options?: FindUserOptions): Promise<User> {
+    const select = getUserSelectors(options?.selectPassword);
+    return this.userRepository.findOne({ where: params, select });
   }
 
   async createUser(params: CreateUserParams) {

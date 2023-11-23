@@ -21,8 +21,8 @@ export class User {
   @Column()
   username: string;
 
-  @Column()
-  @Exclude()
+  @Column({ select: false })
+  @Exclude() // compile with instanceToPlain
   password: string;
 
   @CreateDateColumn({
